@@ -1,0 +1,25 @@
+---
+abstract: 'Map a virtual path to an actual one'
+author:
+  - 'Robert Krimen <rkrimen@cpan.org>'
+build_requires:
+  Test::Most: 0
+distribution_type: module
+generated_by: 'Module::Install version 0.79'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Path-Mapper
+no_index:
+  directory:
+    - inc
+    - t
+requires:
+  Moose: 0
+  Path::Abstract: 0
+  Path::Class: 0
+resources:
+  license: http://dev.perl.org/licenses/
+  repository: http://github.com/robertkrimen/path-mapper/tree/master
+version: 0.010
