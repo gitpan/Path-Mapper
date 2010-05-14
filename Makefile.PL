@@ -1,44 +1,55 @@
-use inc::Module::Install;
 
-name     'Path-Mapper';
-all_from 'lib/Path/Mapper.pm';
-author   'Robert Krimen <rkrimen@cpan.org>';
-license  'perl';
+use strict;
+use warnings;
 
-resources repository => 'http://github.com/robertkrimen/path-mapper/tree/master';
 
-{
-    require ExtUtils::MakeMaker;
-    use strict;
-    no strict 'refs';
 
-    my $libscan = \&{"ExtUtils::MM_Any::libscan"};
-    *{"ExtUtils::MM_Any::libscan"} = sub {
-        return '' unless $libscan->(@_);
-        return '' if $_[1] =~ /\.sw[p-z]$/;
-        return $_[1];
-    };
+use ExtUtils::MakeMaker 6.31;
+
+
+
+my %WriteMakefileArgs = (
+                       'test' => {
+                                   'TESTS' => 't/*.t'
+                                 },
+                       'NAME' => 'Path::Mapper',
+                       'DISTNAME' => 'Path-Mapper',
+                       'CONFIGURE_REQUIRES' => {
+                                                 'ExtUtils::MakeMaker' => '6.31'
+                                               },
+                       'AUTHOR' => 'Robert Krimen <robertkrimen@gmail.com>',
+                       'BUILD_REQUIRES' => {
+                                             'Test::Most' => '0'
+                                           },
+                       'ABSTRACT' => 'Map a virtual path to an actual one',
+                       'EXE_FILES' => [],
+                       'VERSION' => '0.011',
+                       'PREREQ_PM' => {
+                                        'Any::Moose' => '0',
+                                        'Path::Class' => '0',
+                                        'Path::Abstract' => '0'
+                                      },
+                       'LICENSE' => 'perl'
+                     );
+
+
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.56) } ) {
+  my $br = delete $WriteMakefileArgs{BUILD_REQUIRES};
+  my $pp = $WriteMakefileArgs{PREREQ_PM}; 
+  for my $mod ( keys %$br ) {
+    if ( exists $pp->{$mod} ) {
+      $pp->{$mod} = $br->{$mod} if $br->{$mod} > $pp->{$mod}; 
+    }
+    else {
+      $pp->{$mod} = $br->{$mod};
+    }
+  }
 }
 
-{
-    map { my ($pk, $vr) = split m/\s/; build_requires $pk => $vr || 0 } grep { ! /^\s*#/ } split m/\n/, <<_END_;
-Test::Most
-_END_
+delete $WriteMakefileArgs{CONFIGURE_REQUIRES}
+  unless eval { ExtUtils::MakeMaker->VERSION(6.52) };
 
-    map { my ($pk, $vr) = split m/\s/; requires $pk => $vr || 0 } grep { ! /^\s*#/ } split m/\n/, <<_END_;
-Moose
-Path::Abstract
-Path::Class
-_END_
-}
-
-if (-e 'inc/.author') {
-    my $all_from = join '/', 'lib', split m/-/, name . '.pm';
-    `perldoc -tF $all_from > README` if ! -e 'README' || (stat $all_from)[9] > (stat 'README')[9];
-}
+WriteMakefile(%WriteMakefileArgs);
 
 
-auto_install;
-
-WriteAll;
 

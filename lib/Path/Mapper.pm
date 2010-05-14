@@ -1,38 +1,14 @@
 package Path::Mapper;
+BEGIN {
+  $Path::Mapper::VERSION = '0.011';
+}
+# ABSTRACT: Map a virtual path to an actual one
 
 use warnings;
 use strict;
 
-=head1 NAME
 
-Path::Mapper - Map a virtual path to an actual one
-
-=head1 VERSION
-
-Version 0.01
-
-=cut
-
-our $VERSION = '0.010';
-
-
-=head1 SYNOPSIS
-
-    my $mapper = Path::Mapper->new( base => '../' )
-    $mapper->map( a/b => /apple )
-
-    $mapper->dir( /a/b/xyzzy/ ) # /apple/xyzzy
-    $mapper->dir( /a/bxyzzy/ ) # ../a/bxyzzy
-
-=head1 DESCRIPTION
-
-Path::Mapper will map a virtual path to an actual one, doing a substitution based on the deepest common directory
-
-Think of it as doing something like symbolic link resolution (though not exactly)
-
-=cut
-
-use Moose;
+use Any::Moose;
 use Path::Abstract();
 use Path::Class();
 
@@ -48,37 +24,6 @@ sub BUILD {
     $self->map( '' => $base );
 }
 
-=head1 METHODS
-
-=head2 Path::Mapper->new( [ base => <base> ] )
-
-Create a new C<Path::Mapper> object using <base> as the 'root' directory (by default, everything is mapped to be under that directory)
-
-=head2 $mapper->base( <base> )
-
-Change the base directory for $mapper to <base>
-
-=head2 $mapper->map( <virtual> => <actual> )
-
-Set up a map from <virtual> and anything under (e.g. <virtual>/*) to map to the <actual> prefix instead of the usual base
-
-=head2 $mapper->map( <path> )
-
-Return a 2-element list containing the actual base for this path and the path remainder. You probably don't want/need to use this method
-
-=head2 $mapper->dir( <path> )
-
-Map the virtual <path> to an actual one and return the result as a L<Path::Class::Dir> object
-
-=head2 $mapper->file( <path> )
-
-Map the virtual <path> to an actual one and return the result as a L<Path::Class::File> object
-
-=head2 $mapper->path( <path> )
-
-Map the virtual <path> to an actual one and return the result as a L<Path::Abstract> object
-
-=cut
 
 sub base {
     my $self = shift;
@@ -152,60 +97,73 @@ sub path {
     return Path::Abstract->new( grep { length $_ } $base, $remainder );
 }
 
+1;
+
+__END__
+=pod
+
+=head1 NAME
+
+Path::Mapper - Map a virtual path to an actual one
+
+=head1 VERSION
+
+version 0.011
+
+=head1 SYNOPSIS
+
+    my $mapper = Path::Mapper->new( base => '../' )
+    $mapper->map( a/b => /apple )
+
+    $mapper->dir( /a/b/xyzzy/ ) # /apple/xyzzy
+    $mapper->dir( /a/bxyzzy/ ) # ../a/bxyzzy
+
+=head1 DESCRIPTION
+
+Path::Mapper will map a virtual path to an actual one, doing a substitution based on the deepest common directory
+
+Think of it as doing something like symbolic link resolution (though not exactly)
+
+=head1 USAGE
+
+=head2 Path::Mapper->new( [ base => <base> ] )
+
+Create a new C<Path::Mapper> object using <base> as the 'root' directory (by default, everything is mapped to be under that directory)
+
+=head2 $mapper->base( <base> )
+
+Change the base directory for $mapper to <base>
+
+=head2 $mapper->map( <virtual> => <actual> )
+
+Set up a map from <virtual> and anything under (e.g. <virtual>/*) to map to the <actual> prefix instead of the usual base
+
+=head2 $mapper->map( <path> )
+
+Return a 2-element list containing the actual base for this path and the path remainder. You probably don't want/need to use this method
+
+=head2 $mapper->dir( <path> )
+
+Map the virtual <path> to an actual one and return the result as a L<Path::Class::Dir> object
+
+=head2 $mapper->file( <path> )
+
+Map the virtual <path> to an actual one and return the result as a L<Path::Class::File> object
+
+=head2 $mapper->path( <path> )
+
+Map the virtual <path> to an actual one and return the result as a L<Path::Abstract> object
+
 =head1 AUTHOR
 
-Robert Krimen, C<< <rkrimen at cpan.org> >>
+  Robert Krimen <robertkrimen@gmail.com>
 
-=head1 BUGS
+=head1 COPYRIGHT AND LICENSE
 
-Please report any bugs or feature requests to C<bug-path-mapper at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Path-Mapper>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
+This software is copyright (c) 2010 by Robert Krimen.
 
-
-
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc Path::Mapper
-
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Path-Mapper>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/Path-Mapper>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/Path-Mapper>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/Path-Mapper/>
-
-=back
-
-
-=head1 ACKNOWLEDGEMENTS
-
-
-=head1 COPYRIGHT & LICENSE
-
-Copyright 2009 Robert Krimen, all rights reserved.
-
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
-
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
 
-1; # End of Path::Mapper
