@@ -1,6 +1,6 @@
 package Path::Mapper;
 BEGIN {
-  $Path::Mapper::VERSION = '0.011';
+  $Path::Mapper::VERSION = '0.012';
 }
 # ABSTRACT: Map a virtual path to an actual one
 
@@ -108,7 +108,7 @@ Path::Mapper - Map a virtual path to an actual one
 
 =head1 VERSION
 
-version 0.011
+version 0.012
 
 =head1 SYNOPSIS
 

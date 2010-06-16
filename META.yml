@@ -17,4 +17,4 @@ requires:
   Any::Moose: 0
   Path::Abstract: 0
   Path::Class: 0
-version: 0.011
+version: 0.012

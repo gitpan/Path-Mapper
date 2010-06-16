@@ -23,7 +23,7 @@ my %WriteMakefileArgs = (
                                            },
                        'ABSTRACT' => 'Map a virtual path to an actual one',
                        'EXE_FILES' => [],
-                       'VERSION' => '0.011',
+                       'VERSION' => '0.012',
                        'PREREQ_PM' => {
                                         'Any::Moose' => '0',
                                         'Path::Class' => '0',
