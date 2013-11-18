@@ -1,0 +1,50 @@
+{
+   "abstract" : "map paths to handlers",
+   "author" : [
+      "Matt Lawrence <mattlaw@cpan.org>"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "Module::Build version 0.4007, CPAN::Meta::Converter version 2.132140",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Path-Mapper",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Test::More" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.40"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "List::Util" : "0",
+            "perl" : "v5.8.0"
+         }
+      }
+   },
+   "provides" : {
+      "Path::Mapper" : {
+         "file" : "lib/Path/Mapper.pm",
+         "version" : "0.01"
+      },
+      "Path::Mapper::Match" : {
+         "file" : "lib/Path/Mapper/Match.pm"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ]
+   },
+   "version" : "0.01"
+}

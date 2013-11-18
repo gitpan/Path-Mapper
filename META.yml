@@ -1,20 +1,27 @@
 ---
-abstract: 'Map a virtual path to an actual one'
+abstract: 'map paths to handlers'
 author:
-  - 'Robert Krimen <robertkrimen@gmail.com>'
+  - 'Matt Lawrence <mattlaw@cpan.org>'
 build_requires:
-  Test::Most: 0
+  Test::More: 0
 configure_requires:
-  ExtUtils::MakeMaker: 6.31
-generated_by: 'Dist::Zilla version 2.101170'
+  Module::Build: 0.40
+dynamic_config: 1
+generated_by: 'Module::Build version 0.4007, CPAN::Meta::Converter version 2.132140'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: Path-Mapper
-recommends: {}
+provides:
+  Path::Mapper:
+    file: lib/Path/Mapper.pm
+    version: 0.01
+  Path::Mapper::Match:
+    file: lib/Path/Mapper/Match.pm
 requires:
-  Any::Moose: 0
-  Path::Abstract: 0
-  Path::Class: 0
-version: 0.012
+  List::Util: 0
+  perl: v5.8.0
+resources:
+  license: http://dev.perl.org/licenses/
+version: 0.01
